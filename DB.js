@@ -12,7 +12,7 @@ var DATA_1 = "관광지명"; //..
 var fs = require('fs');
 // 파일이 존재하는지 확인
 // 있으면 넘어가고 없으면 새로 생성
-var file = "test.db";
+var file = "DATA.db";
 var exists = fs.existsSync(file);
 if (!exists) {
   console.log("Creating DB file.");
@@ -29,7 +29,7 @@ db.serialize(function () {
   if (!exists) {
     //사용할 table만 넣기
     db.run('CREATE TABLE TABLE_LOCATION_DATA(관광지명 text NOT NULL PRIMARY KEY, 소재지도로명주소 text, 소재지지번주소 text,위도 text,경도 text,면적 text,공공편익시설정보 text,숙박시설정보 text,운동및오락시설정보 text,휴양및문화시설정보 text, 지정일자 text,수용인원수 text,주차가능수 text,관광지소개 text,관리기관전화번호 text,관리기관명 text,데이터기준일자 text)')
-
+    db.run('CREATE TABLE TABLE_USERINFO_DATA(ID text NOT NULL PRIMARY KEY, PW text, 관광지 text, FOREIGN KEY(관광지) REFERENCES TABLE_LOCATION_DATA(관광지명))');
     var jsonData = require('./HNdata.json');
     var records = jsonData.records;
     var result = "";
