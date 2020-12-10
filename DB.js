@@ -5,7 +5,23 @@
 // 2-2 Table을 먼저 json파일을 읽어온 field로 채운다.
 // 2-3 insert문을 실행
 // 2-4 select문으로 확인 
+var express = require('express');
+var app = express();
 
+var bodyParser = require('body-parser'); 
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(express.json());
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+var router = require('./router/main')(app);
+var server = app.listen(8080, function(){
+    console.log("Express server has started on port 8080")
+})
+
+// json local에서는 읽어지는데
+// index.html로 웹뷰로 실행시키면 안읽어지게 하기
 var TABLE_DATA_NAME = "TABLE_LOCATION_DATA";
 var DATA_1 = "관광지명"; //..
 
@@ -18,7 +34,6 @@ if (!exists) {
   console.log("Creating DB file.");
   fs.openSync(file, "w");
 }
-
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database(file);
 // 파일 최초 생성시 table도 생성
@@ -42,7 +57,3 @@ db.serialize(function () {
 })
 
 db.close();
-
-// json local에서는 읽어지는데
-// index.html로 웹뷰로 실행시키면 안읽어지게 하기
-

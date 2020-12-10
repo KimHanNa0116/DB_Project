@@ -1,0 +1,27 @@
+{
+  "name": "db_project",
+  "version": "1.0.0",
+  "description": "DB 프로젝트",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KimHanNa0116/DB_Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^17.0.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "underscore": "1.11.0",
+    "uniq": "^1.0.1",
+    "uniqid": "^5.2.0"
+  },
+  "bugs": {
+    "url": "https://github.com/KimHanNa0116/DB_Project/issues"
+  },
+  "homepage": "https://github.com/KimHanNa0116/DB_Project#readme"
+}
