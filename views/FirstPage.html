@@ -17,19 +17,14 @@
         <h1>User Info</h1><br>
         회원정보를 등록하세요
         <br>
-        <input type="text"  id="userid"><br>
-        <input type="text"  id="userpw"><br>
+        <input type="text"  id="userid" placeholder="e-mail를 넣어주세요."><br>
+        <input type="text"  id="userpw" placeholder="password를 넣어주세요."><br>
         <input type="button" id="Login" value="LOGIN" onclick="movepage()">
     </body>
     <script type="text/javascript">
-    function movepage()
-          {
-              location.href="/about";
-          }
+ 
       jQuery('#Login').click(function(){
         console.log('button clicked');
-        //$.post('/test1',{ email: $("#userid").val(), password : $("#userpw").val() })});
-         //, password : $("#userpw").val() 
          var id = $('#userid').val()
          var pw = $('#userpw').val()
          jQuery.ajax({
@@ -44,5 +39,10 @@
             alert('text status '+textStatus+', err '+err)
           }
           })});
+
+          function movepage()
+          {
+              location.href="/FindLocation";
+          }
     </script>
 </html>

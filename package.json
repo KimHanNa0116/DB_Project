@@ -2,7 +2,7 @@
   "name": "db_project",
   "version": "1.0.0",
   "description": "DB 프로젝트",
-  "main": "app.js",
+  "main": "DB.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

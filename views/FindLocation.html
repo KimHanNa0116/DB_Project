@@ -1,0 +1,68 @@
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<head>
+  <title>FindLocation</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <li>
+    <label class="reg" for="class"> 여행 할 장소를 고르시오.</label>
+    <select id="class" name="class">
+      <option value="서울특별시">서울특별시</option>
+      <option value="부산광역시">부산광역시</option>
+      <option value="대구광역시">대구광역시</option>
+      <option value="인천광역시">인천광역시</option>
+      <option value="대전광역시">대전광역시</option>
+      <option value="광주광역시">광주광역시</option>
+      <option value="울산광역시">울산광역시</option>
+      <option value="강원도">강원도</option>
+      <option value="경기도">경기도</option>
+      <option value="충청북도">충청북도</option>
+      <option value="충청남도">충청남도</option>
+      <option value="전라북도">전라북도</option>
+      <option value="전라남도">전라남도</option>
+      <option value="경상북도">경상북도</option>
+      <option value="경상남도">경상남도</option>
+      <option value="제주">제주</option>
+    </select>
+    <button type="button" id="sendContact">완료</button>
+  </li><br>
+
+  <!--카카오지도-->
+  <div id="map" style="width:50%;height:400px;"></div>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d5e3f9817f68d0669a5b4aa1e19f997"></script>
+  <script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+      mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+      };
+    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption); 
+  </script>
+
+  <!--버튼 눌렀을 때 함수-->
+  <script type="text/javascript">
+   jQuery('#sendContact').click(function () {
+        var loc = $('#class').val()
+        jQuery.ajax({
+          type: 'post',
+          url: "test2",
+          data: { loc: $('#class').val() },
+          success: function (data) {
+            console.log('message', data.message);
+          },
+          error: function (jqXHR, textStatus, err) {
+            alert('text status ' + textStatus + ', err ' + err)
+          }
+        })
+      });
+  </script>
+<!--화면에 관광지명 보여주기-->
+
+</body>
+
+</html>
