@@ -21,10 +21,7 @@ var server = app.listen(8080, function(){
     console.log("Express server has started on port 8080")
 })
 
-// json local에서는 읽어지는데
-// index.html로 웹뷰로 실행시키면 안읽어지게 하기
-var TABLE_DATA_NAME = "TABLE_LOCATION_DATA";
-var DATA_1 = "관광지명"; //..
+
 
 var fs = require('fs');
 // 파일이 존재하는지 확인

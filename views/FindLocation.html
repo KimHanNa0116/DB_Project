@@ -1,5 +1,4 @@
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
 <head>
@@ -16,7 +15,6 @@
       <option value="대구광역시">대구광역시</option>
       <option value="인천광역시">인천광역시</option>
       <option value="대전광역시">대전광역시</option>
-      <option value="광주광역시">광주광역시</option>
       <option value="울산광역시">울산광역시</option>
       <option value="강원도">강원도</option>
       <option value="경기도">경기도</option>
@@ -29,8 +27,10 @@
       <option value="제주">제주</option>
     </select>
     <button type="button" id="sendContact">완료</button>
-    <button type="button" id="checkdata" onClick="location.href='/CheckMyData'" style="float: right;">내 여행리스트 보러가기</button>
-    <button type="button" id="senddata" style="float: right;">여행리스트에 추가하기</button>
+    <button type="button" id="checkdata" onClick="location.href='/CheckMyNewData'" style="float: right;">내 여행리스트
+      보러가기</button>
+
+
   </li>
   <br>
 
@@ -47,8 +47,8 @@
     var map = new kakao.maps.Map(mapContainer, mapOption); 
   </script>
 
-  <!--화면에 관광지명 보여주기-->
-  <h3>--List Name--</h3>
+  <!--화면에 관광지명 보여주기위한 html-->
+  <h3>--추천 관광지명--</h3>
   <div data-role="page" id="pageOne">
     <div role="main" class="ui-content">
       <ul data-role="listview" data-inset="true" id="list">
@@ -56,8 +56,7 @@
     </div>
   </div>
 
-
-  <!--버튼 눌렀을 때 함수-->
+  <!--화면에 추천 관광지명과 지도보기 및 선택하는 버튼 생성-->
   <script type="text/javascript">
     jQuery('#sendContact').click(function () {
       var loc = $('#class').val()
@@ -70,8 +69,9 @@
           for (var i = 0; i < data.length;) {
             html += '<li>';
             html += '<h5>' + data[i] + '</h5>';
-            html += '<input type="checkBox" onclick="onClickHandler()" id="mapCheck" value="' + data[i] + '"unchecked >지도보기'
-            html += '<input type="checkBox" onclick="onClickHandler2()" id="selectCheck" value="' + data[i] + '"unchecked>선택'
+            html += '<input type="button" onclick="onClick(this.id)" id="' + data[i] + '" value="지도보기">'
+            html += ' '
+            html += '<input type="button" onclick="onClick2(this.id)" id="' + data[i] + '" value="여행리스트에 추가하기">'
             html += '</li>';
             i = i + 1;
           }
@@ -87,15 +87,15 @@
     }); 
   </script>
 
-  <!--지도에 위치 띄우기-->
+  <!--선택한 곳의 위치를 지도위에 마커를 활용하여 띄우기-->
   <div id="map" style="width:50%;height:400px;"></div>
   <script type="text/javascript">
-    function onClickHandler() {
-      
+    function onClick(check) {
+      console.log(check);
       jQuery.ajax({
         type: 'post',
         url: "test3",
-        data: { loc: $('input:checkbox[id="mapCheck"]:checked').val() },
+        data: { loc: check },
         success: function (data) {
           var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = {
@@ -106,15 +106,16 @@
           var map = new kakao.maps.Map(mapContainer, mapOption);
 
           // 마커가 표시될 위치입니다 
-          var markerPosition = new kakao.maps.LatLng(data[0],data[1]);
+          var markerPosition = new kakao.maps.LatLng(data[0], data[1]);
+          if (data[0] != 33.450701) {
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+              position: markerPosition
+            });
+            // 마커가 지도 위에 표시되도록 설정합니다
+            marker.setMap(map);
+          }
 
-          // 마커를 생성합니다
-          var marker = new kakao.maps.Marker({
-            position: markerPosition
-          });
-
-          // 마커가 지도 위에 표시되도록 설정합니다
-          marker.setMap(map);
         },
         error: function (jqXHR, textStatus, err) {
           alert('text status ' + textStatus + ', err ' + err)
@@ -124,23 +125,23 @@
   </script>
 
 
-<!--선택한것 insert하기-->
-<script type="text/javascript">
-  function onClickHandler2() {
-    jQuery.ajax({
-      type: 'post',
-      url: "test4",
-      data: { loc: $('input:checkbox[id="selectCheck"]:checked').val() },
-      success: function (data) {
-        alert("내 여행리스트에 추가했습니다");
-       
-      },
-      error: function (jqXHR, textStatus, err) {
-        alert('text status ' + textStatus + ', err ' + err)
-      }
-    })
-  }
-</script>
+  <!--선택한것 내 여행 list에 insert하기-->
+  <script type="text/javascript">
+    function onClick2(check) {
+      jQuery.ajax({
+        type: 'post',
+        url: "test4",
+        data: { loc: check },
+        success: function (data) {
+
+        },
+        error: function (jqXHR, textStatus, err) {
+          alert('text status ' + textStatus + ', err ' + err)
+        }
+      })
+      alert("내 여행리스트에 추가했습니다");
+    }
+  </script>
 </body>
 
 </html>

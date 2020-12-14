@@ -17,7 +17,7 @@
     <script type="text/javascript">
         jQuery.ajax({
             type: 'post',
-            url: "test8",
+            url: "test5",
             data: " ",
             success: function (data) {
                 var html = "";
@@ -28,6 +28,7 @@
                     html += '</li>';
                     i = i + 1;
                 }
+
                 $("#list").append(html);
                 $("#list").html.apply(html);
             },
@@ -44,7 +45,7 @@
             console.log(check);
             jQuery.ajax({
                 type: 'post',
-                url: "test9",
+                url: "test6",
                 data: { loc: check },
                 success: function (data) {
                     var html = "";

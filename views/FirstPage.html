@@ -1,48 +1,105 @@
-
 <!DOCTYPE html>
 <html>
-    <!--ajax, jquery-->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <head>
-        <style>
-            h1{
-                color:pink;
-            }
-        </style>
-    </head>
+<!--jquery-->
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
-    <!--body-->
-    <body>
-        <h1>User Info</h1><br>
-        회원정보를 등록하세요
-        <br>
-        <input type="text"  id="userid" placeholder="e-mail를 넣어주세요."><br>
-        <input type="text"  id="userpw" placeholder="password를 넣어주세요."><br>
-        <input type="button" id="Login" value="LOGIN" onclick="movepage()">
-    </body>
-    <script type="text/javascript">
- 
-      jQuery('#Login').click(function(){
-        console.log('button clicked');
-         var id = $('#userid').val()
-         var pw = $('#userpw').val()
-         jQuery.ajax({
-          type: 'post',
-          url: "test1",
-          data: { email : $("#userid").val(), pw : $("#userpw").val()},
-          success: function(data)
-          {
-             console.log('message', data.message);
-          },
-            error: function(jqXHR, textStatus, err) {
-            alert('text status '+textStatus+', err '+err)
-          }
-          })});
+<head>
+  <style>
+    div {
+      width: 100%;
+      height: 300px;
 
-          function movepage()
-          {
-              location.href="/FindLocation";
-          }
-    </script>
+      border: 1px solid pink;
+    }
+
+    div.left {
+      width: 50%;
+      float: left;
+      box-sizing: border-box;
+
+      border: 1px solid pink;
+    }
+
+    div.right {
+      width: 50%;
+      float: right;
+      box-sizing: border-box;
+
+      border: 1px solid pink;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="right">
+      <h1>신규 계정</h1>
+      <h5>회원정보를 입력하시고 사용하세요.</h5><br>
+      회원정보를 등록하세요
+      <br>
+      <input type="text" id="newuserid" placeholder="e-mail를 넣어주세요."><br>
+      <input type="text" id="newuserpw" placeholder="password를 넣어주세요."><br>
+      <input type="button" id="Login" value="LOGIN" onclick="movepage()">
+    </div>
+
+    <div class="left">
+      <h1>기존 계정</h1>
+      <h5>기존의 관광지 리스트를 보고싶다면 회원정보를 입력하세요.</h5><br>
+      회원정보를 입력하세요
+      <br>
+      <input type="text" id="userid" placeholder="e-mail를 넣어주세요."><br>
+      <input type="text" id="userpw" placeholder="password를 넣어주세요."><br>
+      <input type="button" id="search" value="SEARCH" onclick="movepage2()">
+    </div>
+  </div>
+</body>
+
+<!--신규회원일때-->
+<script type="text/javascript">
+  jQuery('#Login').click(function () {
+    console.log('button clicked');
+    var id = $('#newuserid').val()
+    var pw = $('#newuserpw').val()
+    jQuery.ajax({
+      type: 'post',
+      url: "test1",
+      data: { email: $("#newuserid").val(), pw: $("#newuserpw").val() },
+      success: function (data) {
+        //console.log(data[0], data[1]);
+      },
+      error: function (jqXHR, textStatus, err) {
+        alert('text status ' + textStatus + ', err ' + err)
+      }
+    })
+  });
+  function movepage() {
+    alert("회원정보가 저장되었습니다.");
+    location.href = "/FindLocation";
+  }
+</script>
+<!--기존회원일때-->
+<script type="text/javascript">
+  jQuery('#search').click(function () {
+    console.log('button clicked');
+    var id = $('#userid').val()
+    var pw = $('#userpw').val()
+    jQuery.ajax({
+      type: 'post',
+      url: "test7",
+      data: { email: $("#userid").val(), pw: $("#userpw").val() },
+      success: function (data) {
+        //console.log(data[0], data[1]);
+      },
+      error: function (jqXHR, textStatus, err) {
+        alert('text status ' + textStatus + ', err ' + err)
+      }
+    })
+  });
+
+  function movepage2() {
+    alert("회원님의 관광지리스트를 보여드리겠습니다.");
+    location.href = "/CheckMyData";
+  }
+</script>
+
 </html>
